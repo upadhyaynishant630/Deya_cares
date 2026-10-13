@@ -1,1 +1,483 @@
-/* Shared product section rules live in App.css. */
+/* =========================================================
+   DEYA CARE — PRODUCT SECTION
+   Premium product collection layout with subtle reveal motion.
+   All selectors are scoped to avoid leaking into other pages.
+   Compatible with the existing ProductCard component.
+   ========================================================= */
+
+.deya-product-section {
+  --dps-ink: #202432;
+  --dps-copy: #696b79;
+  --dps-muted: #8d8e9a;
+  --dps-pink: #ff3f87;
+  --dps-pink-dark: #e92d76;
+  --dps-line: #f0eaf0;
+  --dps-max-width: 1320px;
+
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  margin: 0;
+  padding: clamp(52px, 7vw, 96px) clamp(16px, 3.2vw, 42px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 4% 7%, rgb(255 224 238 / 40%), transparent 22rem),
+    radial-gradient(circle at 96% 54%, rgb(255 237 221 / 42%), transparent 25rem),
+    #fff;
+  color: var(--dps-ink);
+}
+
+.deya-product-section::before,
+.deya-product-section::after {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  width: clamp(170px, 24vw, 320px);
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 119 170 / 13%);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.deya-product-section::before {
+  top: -16%;
+  right: -7%;
+  box-shadow:
+    0 0 0 22px rgb(255 119 170 / 3%),
+    0 0 0 45px rgb(255 119 170 / 2%);
+}
+
+.deya-product-section::after {
+  bottom: -24%;
+  left: -10%;
+  width: clamp(190px, 26vw, 360px);
+  border-color: rgb(229 177 149 / 18%);
+  box-shadow: 0 0 0 30px rgb(229 177 149 / 3%);
+}
+
+.deya-product-section-inner {
+  width: min(100%, var(--dps-max-width));
+  margin-inline: auto;
+}
+
+/* SECTION HEADER */
+
+.deya-product-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 0 clamp(24px, 3vw, 38px);
+}
+
+.deya-product-section-heading-copy {
+  max-width: 760px;
+  min-width: 0;
+}
+
+.deya-product-section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--dps-pink-dark);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.deya-product-section-eyebrow svg {
+  flex: 0 0 auto;
+  animation: dps-sparkle 3.2s ease-in-out infinite;
+}
+
+.deya-product-section-header h2 {
+  max-width: 760px;
+  margin: 12px 0 11px;
+  color: var(--dps-ink);
+  font-size: clamp(30px, 4vw, 49px);
+  font-weight: 750;
+  letter-spacing: -0.065em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.deya-product-section-heading-copy > p {
+  max-width: 580px;
+  margin: 0;
+  color: var(--dps-copy);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.deya-product-count {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  border: 1px solid rgb(255 63 135 / 16%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 78%);
+  box-shadow: 0 5px 18px rgb(50 33 47 / 4%);
+  color: var(--dps-muted);
+  font-size: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.deya-product-count strong {
+  color: var(--dps-pink-dark);
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* PRODUCT GRID */
+
+.deya-product-section .deya-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(13px, 1.7vw, 22px);
+  width: 100%;
+  margin: 0;
+  padding: 2px 2px 12px;
+}
+
+.deya-product-section .product-section-item {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  opacity: 0;
+  transform: translate3d(0, 22px, 0) scale(0.99);
+  transition:
+    opacity 650ms ease,
+    transform 650ms cubic-bezier(0.2, 0.72, 0.25, 1);
+  transition-delay: var(--product-stagger, 0ms);
+  will-change: opacity, transform;
+}
+
+.deya-product-section .product-section-item.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.deya-product-section .product-section-item > .product-card {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+/* An elegant top accent appears as a card enters view. */
+.deya-product-section .product-section-item::before {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 16%;
+  width: 68%;
+  height: 2px;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(90deg, transparent, #ff8fba, transparent);
+  content: '';
+  opacity: 0;
+  transform: scaleX(0.55);
+  transition:
+    opacity 350ms ease,
+    transform 450ms ease;
+  pointer-events: none;
+}
+
+.deya-product-section .product-section-item:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* PRODUCT CARD INTEGRATION
+   Preserve ProductCard behaviour while giving cards a cohesive section finish. */
+
+.deya-product-section .product-card {
+  border-color: #f1eaf0;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgb(50 33 47 / 4%);
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    box-shadow 320ms ease,
+    border-color 320ms ease;
+}
+
+.deya-product-section .product-card:hover {
+  border-color: #ffd0e1;
+  box-shadow: 0 18px 38px rgb(42 24 43 / 10%);
+}
+
+.deya-product-section .product-card .product-image {
+  border-radius: 14px 14px 0 0;
+}
+
+/* EMPTY STATE */
+
+.deya-products-empty {
+  display: flex;
+  min-height: 270px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 38px 22px;
+  border: 1px dashed #f1bcd0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff8fb, #fffdf9);
+  text-align: center;
+}
+
+.deya-products-empty-icon {
+  display: grid;
+  width: 55px;
+  height: 55px;
+  place-items: center;
+  border: 1px solid #ffd1e2;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--dps-pink);
+  box-shadow: 0 8px 22px rgb(233 45 118 / 8%);
+}
+
+.deya-products-empty h3 {
+  margin: 18px 0 8px;
+  color: var(--dps-ink);
+  font-size: clamp(19px, 2.5vw, 25px);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.deya-products-empty p {
+  max-width: 430px;
+  margin: 0;
+  color: var(--dps-copy);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.deya-products-empty-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 21px;
+  padding: 11px 16px;
+  border: 1px solid var(--dps-pink);
+  border-radius: 8px;
+  background: var(--dps-pink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 750;
+  transition:
+    background 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.deya-products-empty-link:hover {
+  transform: translateY(-2px);
+  background: var(--dps-pink-dark);
+  box-shadow: 0 8px 20px rgb(255 63 135 / 20%);
+}
+
+/* VIEW ALL */
+
+.deya-product-section-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(25px, 3vw, 37px);
+}
+
+.deya-product-section-view-all {
+  display: inline-flex;
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 5px 7px 5px 20px;
+  border: 1px solid #ffadd0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 90%);
+  color: var(--dps-pink-dark);
+  font-size: 11px;
+  font-weight: 750;
+  box-shadow: 0 5px 15px rgb(50 33 47 / 3%);
+  transition:
+    color 250ms ease,
+    border-color 250ms ease,
+    background 250ms ease,
+    transform 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.deya-view-all-icon {
+  display: grid;
+  width: 33px;
+  height: 33px;
+  flex: 0 0 33px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff0f6;
+  transition:
+    color 250ms ease,
+    background 250ms ease,
+    transform 250ms ease;
+}
+
+.deya-product-section-view-all:hover {
+  transform: translateY(-3px);
+  border-color: var(--dps-pink);
+  background: var(--dps-pink);
+  color: #fff;
+  box-shadow: 0 10px 25px rgb(255 63 135 / 17%);
+}
+
+.deya-product-section-view-all:hover .deya-view-all-icon {
+  transform: translateX(2px);
+  background: rgb(255 255 255 / 21%);
+  color: #fff;
+}
+
+/* MOTION */
+
+@keyframes dps-sparkle {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(12deg) scale(1.12);
+  }
+}
+
+/* LARGE TABLETS */
+
+@media (max-width: 1100px) {
+  .deya-product-section .deya-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+/* TABLETS */
+
+@media (max-width: 760px) {
+  .deya-product-section {
+    padding: 60px 22px;
+  }
+
+  .deya-product-section-header {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .deya-product-section-header h2 {
+    font-size: clamp(29px, 5.5vw, 40px);
+  }
+
+  .deya-product-section-heading-copy > p {
+    font-size: 12px;
+  }
+
+  .deya-product-count {
+    padding: 8px 10px;
+    gap: 6px;
+    font-size: 9px;
+  }
+
+  .deya-product-section .deya-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .deya-product-section .product-card {
+    border-radius: 13px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .deya-product-section {
+    padding: 47px 15px;
+  }
+
+  .deya-product-section-header {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  .deya-product-section-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .deya-product-section-header h2 {
+    margin-top: 10px;
+    font-size: clamp(27px, 7.5vw, 34px);
+    letter-spacing: -0.055em;
+  }
+
+  .deya-product-section-heading-copy > p {
+    max-width: 340px;
+    font-size: 11px;
+    line-height: 1.75;
+  }
+
+  .deya-product-count {
+    margin-top: 13px;
+  }
+
+  .deya-product-section .deya-product-grid {
+    gap: 12px 10px;
+    padding-inline: 0;
+  }
+
+  .deya-product-section .product-card {
+    border-radius: 11px;
+  }
+
+  .deya-product-section .product-card .product-image {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .deya-product-section-footer {
+    margin-top: 25px;
+  }
+
+  .deya-product-section-view-all {
+    min-height: 43px;
+    padding-left: 16px;
+    font-size: 10px;
+  }
+
+  .deya-view-all-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+/* REDUCED MOTION: content remains visible without entrance transitions. */
+
+@media (prefers-reduced-motion: reduce) {
+  .deya-product-section::before,
+  .deya-product-section::after,
+  .deya-product-section *,
+  .deya-product-section *::before,
+  .deya-product-section *::after {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .deya-product-section .product-section-item {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+}

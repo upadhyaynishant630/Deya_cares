@@ -71,7 +71,7 @@ export default function Shop({ addToCart }) {
             className="shop-banner"
             src="/images/banners/shop-header.jpg"
             alt="Deya Care skincare collection"
-            fetchPriority="high"
+            fetchpriority="high"
           />
           <div className="shop-banner-shade" aria-hidden="true" />
           <div className="shop-banner-caption">
