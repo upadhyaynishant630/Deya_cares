@@ -10,12 +10,23 @@ import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import FloatingActions from './components/FloatingActions';
+import useCart from './hooks/useCart';
 import './App.css';
 
-export default function App({ cart, addToCart }) {
+// Cart state now lives here, so Shop/Home/ProductDetails/About (addToCart)
+// and the Navbar + Bag drawer all share the same data.
+// Props from main.jsx (cart, addToCart) are no longer needed.
+export default function App() {
+  const { cartItems, addToCart, updateQuantity, removeItem } = useCart();
+
   return (
     <>
-      <Navbar count={cart.length} />
+      <Navbar
+        cartItems={cartItems}
+        addToCart={addToCart}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+      />
       <Routes>
         <Route path="/" element={<Home addToCart={addToCart} />} />
         <Route path="/shop" element={<Shop addToCart={addToCart} />} />

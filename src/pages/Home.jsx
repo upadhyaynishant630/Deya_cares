@@ -9,6 +9,7 @@ import {
   Play,
   ShieldCheck,
   Sparkles,
+  X,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { products } from '../data/products';
@@ -359,6 +360,7 @@ export default function Home({ addToCart }) {
   const [activeHero, setActiveHero] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [showAllProducts, setShowAllProducts] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(null);
 
   const featuredProducts = useMemo(() => products.slice(0, 8), []);
 
@@ -376,6 +378,21 @@ export default function Home({ addToCart }) {
 
     return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (!activeVideo) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setActiveVideo(null);
+    };
+
+    document.addEventListener('keydown', closeOnEscape);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape);
+      document.body.style.overflow = '';
+    };
+  }, [activeVideo]);
 
   const selectCategory = (category) => {
     const index = bestsellerTabs.findIndex((tab) => tab.label === category);
@@ -492,7 +509,7 @@ export default function Home({ addToCart }) {
       <section className="deya-featured-banner" aria-label="A Deya Care skincare ritual">
         <div className="deya-featured-image">
           <img
-            src="/images/banners/homepage-2.jpg"
+            src="/images/banners/deya-ritual-banner.png"
             alt="Deya Care skincare collection"
             loading="lazy"
           />
@@ -547,12 +564,11 @@ export default function Home({ addToCart }) {
           <div className="deya-video-grid">
             {videoCards.map((card, index) => (
               <article className="deya-video-card" key={card.title}>
-                <a
+                <button
+                  type="button"
                   className="deya-video-image"
-                  href={card.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Watch ${card.title} on Instagram`}
+                  onClick={() => setActiveVideo(card)}
+                  aria-label={`Play ${card.title}`}
                 >
                   <img
                     src={card.image}
@@ -565,7 +581,7 @@ export default function Home({ addToCart }) {
                   <span className="deya-video-play"><Play size={29} fill="currentColor" /></span>
                   <strong className="deya-video-watch">Watch on Instagram</strong>
                   <span className="deya-video-number">0{index + 1}</span>
-                </a>
+                </button>
                 <div className="deya-video-copy">
                   <img
                     src={card.productImage}
@@ -583,7 +599,7 @@ export default function Home({ addToCart }) {
               </article>
             ))}
           </div>
-          <p className="deya-video-note">Video cards open the corresponding Instagram post in a new tab.</p>
+          <p className="deya-video-note">Tap a card to watch the reel in a full-screen player.</p>
         </div>
       </section>
 
@@ -664,27 +680,59 @@ export default function Home({ addToCart }) {
             Follow @deya.care <ArrowRight size={16} />
           </a>
         </div>
-        <div className="deya-community-grid">
-          {communityImages.map((image, index) => (
-            <a
-              href="https://www.instagram.com/deya.care/"
-              target="_blank"
-              rel="noreferrer"
-              key={`community-${image}`}
-              className={`deya-community-tile tile-${index + 1}`}
-              aria-label="Explore Deya Care on Instagram"
-            >
-              <img
-                src={`/images/gallery/community-${image}.png`}
-                alt={`Deya Care community moment ${index + 1}`}
-                loading="lazy"
-                onError={(event) => { event.currentTarget.style.visibility = 'hidden'; }}
-              />
-              <span><Heart size={19} /></span>
-            </a>
-          ))}
+        <div className="deya-community-grid" aria-label="Deya Care community gallery">
+          <div className="deya-community-track">
+            {[...communityImages, ...communityImages].map((image, index) => (
+              <a
+                href="https://www.instagram.com/deya.care/"
+                target="_blank"
+                rel="noreferrer"
+                key={`community-${image}-${index}`}
+                className="deya-community-tile"
+                aria-label="Explore Deya Care on Instagram"
+              >
+                <img
+                  src={`/images/gallery/community-${image}.png`}
+                  alt={`Deya Care community moment ${(index % communityImages.length) + 1}`}
+                  loading="lazy"
+                  onError={(event) => { event.currentTarget.style.visibility = 'hidden'; }}
+                />
+                <span><Heart size={19} /></span>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
+
+      {activeVideo && (
+        <div className="deya-video-modal" role="dialog" aria-modal="true" aria-labelledby="deya-video-modal-title">
+          <button
+            type="button"
+            className="deya-video-modal-backdrop"
+            aria-label="Close video"
+            onClick={() => setActiveVideo(null)}
+          />
+          <div className="deya-video-modal-dialog">
+            <div className="deya-video-modal-header">
+              <h2 id="deya-video-modal-title">{activeVideo.title}</h2>
+              <button type="button" className="deya-video-modal-close" onClick={() => setActiveVideo(null)} aria-label="Close video">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="deya-video-modal-frame">
+              <iframe
+                src={`${activeVideo.url.replace(/\/?$/, '/')}embed/`}
+                title={`${activeVideo.title} video`}
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <a className="deya-video-modal-link" href={activeVideo.url} target="_blank" rel="noreferrer">
+              Open on Instagram <ArrowRight size={15} />
+            </a>
+          </div>
+        </div>
+      )}
 
       <div className="deya-home-newsletter"><Newsletter /></div>
     </main>

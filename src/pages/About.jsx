@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
   Check,
@@ -26,9 +26,9 @@ const ABOUT_IMAGES = {
 
 const ingredients = [
   {
-    name: 'Feluric Acid',
+    name: 'Ferulic Acid',
     image: '/images/about/feluric-acid.jpeg',
-    copy: 'A powerful antioxidant that helps protect collagen and elastin from oxidative stress while supporting a brighter-looking complexion.',
+    copy: 'An antioxidant ingredient used in skincare to help defend against environmental stress and support a brighter-looking complexion.',
   },
   {
     name: 'Glutathione',
@@ -43,12 +43,12 @@ const ingredients = [
   {
     name: 'Jojoba Beads',
     image: '/images/about/jojoba-beads.jpeg',
-    copy: 'Smooth, non-abrasive jojoba beads offer gentle physical exfoliation without the harsh feel of rough particles.',
+    copy: 'Smooth jojoba beads offer gentle physical exfoliation with a more comfortable feel than rough particles.',
   },
   {
     name: 'Limepearl',
     image: '/images/about/limepearl.jpeg',
-    copy: 'Derived from Australian caviar lime, this ingredient is valued for its AHA-rich composition and gentle exfoliating feel.',
+    copy: 'Derived from Australian caviar lime, this ingredient is valued for its AHA-rich composition and exfoliating feel.',
   },
   {
     name: 'Lactic Acid',
@@ -99,14 +99,41 @@ const values = [
   },
 ];
 
-const recommendedProducts = products.filter((product) => [
+const principles = [
+  {
+    icon: FlaskConical,
+    title: 'Purposeful ingredients',
+    copy: 'Thoughtfully chosen, never needlessly complicated.',
+  },
+  {
+    icon: Heart,
+    title: 'Everyday rituals',
+    copy: 'Care that fits the rhythm of real life.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Comfort-first thinking',
+    copy: 'A considered approach to your daily skin routine.',
+  },
+];
+
+const recommendedIds = new Set([
   'blemish-be-gone',
   'clearity-drop',
   'cloud-screen',
   'glaze-drop',
   'luma-cleanse',
   'sweat-not',
-].includes(product.id));
+]);
+
+const recommendedProducts = products.filter((product) => recommendedIds.has(product.id));
+
+function formatPrice(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount)
+    ? amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })
+    : '0';
+}
 
 export default function About({ addToCart = () => {} }) {
   const ingredientTrackRef = useRef(null);
@@ -117,73 +144,98 @@ export default function About({ addToCart = () => {} }) {
     const track = ingredientTrackRef.current;
     if (!track) return undefined;
 
-    let animationFrame;
-    let isPaused = false;
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animationFrame = 0;
+    let isPaused = reduceMotionQuery.matches;
 
     const pauseMarquee = () => {
       isPaused = true;
     };
+
     const resumeMarquee = () => {
-      isPaused = false;
+      if (!reduceMotionQuery.matches && document.visibilityState === 'visible') {
+        isPaused = false;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'hidden') {
+        isPaused = true;
+      } else {
+        resumeMarquee();
+      }
+    };
+
+    const handleMotionPreference = () => {
+      isPaused = reduceMotionQuery.matches;
     };
 
     const advanceMarquee = () => {
-      if (!isPaused) {
-        track.scrollLeft += 0.55;
-        if (track.scrollLeft >= track.scrollWidth / 2) {
-          track.scrollLeft = 0;
+      if (!isPaused && track.scrollWidth > track.clientWidth) {
+        track.scrollLeft += 0.45;
+        const loopPoint = track.scrollWidth / 2;
+        if (loopPoint > 0 && track.scrollLeft >= loopPoint) {
+          track.scrollLeft -= loopPoint;
         }
       }
-      animationFrame = requestAnimationFrame(advanceMarquee);
+      animationFrame = window.requestAnimationFrame(advanceMarquee);
     };
 
     track.addEventListener('mouseenter', pauseMarquee);
     track.addEventListener('mouseleave', resumeMarquee);
     track.addEventListener('focusin', pauseMarquee);
     track.addEventListener('focusout', resumeMarquee);
-    animationFrame = requestAnimationFrame(advanceMarquee);
+    track.addEventListener('touchstart', pauseMarquee, { passive: true });
+    track.addEventListener('touchend', resumeMarquee, { passive: true });
+    document.addEventListener('visibilitychange', handleVisibility);
+    reduceMotionQuery.addEventListener?.('change', handleMotionPreference);
+    animationFrame = window.requestAnimationFrame(advanceMarquee);
 
     return () => {
-      cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(animationFrame);
       track.removeEventListener('mouseenter', pauseMarquee);
       track.removeEventListener('mouseleave', resumeMarquee);
       track.removeEventListener('focusin', pauseMarquee);
       track.removeEventListener('focusout', resumeMarquee);
+      track.removeEventListener('touchstart', pauseMarquee);
+      track.removeEventListener('touchend', resumeMarquee);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      reduceMotionQuery.removeEventListener?.('change', handleMotionPreference);
     };
   }, []);
 
-  const moveIngredients = useCallback((direction) => {
-    const track = ingredientTrackRef.current;
+  const scrollTrack = useCallback((trackRef, direction, selector, fallbackWidth, gap, cardsToMove = 2) => {
+    const track = trackRef.current;
     if (!track) return;
 
-    const firstCard = track.querySelector('.ingredient-card');
-    const cardWidth = firstCard?.getBoundingClientRect().width ?? 260;
-    const gap = 18;
-
+    const firstCard = track.querySelector(selector);
+    const cardWidth = firstCard?.getBoundingClientRect().width || fallbackWidth;
     track.scrollBy({
-      left: direction * (cardWidth + gap) * 2,
-      behavior: 'smooth',
+      left: direction * (cardWidth + gap) * cardsToMove,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
     });
   }, []);
 
-  const moveRecommendations = useCallback((direction) => {
-    const track = recommendationTrackRef.current;
-    if (!track) return;
+  const moveIngredients = useCallback(
+    (direction) => scrollTrack(ingredientTrackRef, direction, '.ingredient-card', 260, 18, 2),
+    [scrollTrack],
+  );
 
-    const card = track.querySelector('.recommendation-card');
-    const cardWidth = card?.getBoundingClientRect().width ?? 250;
-    track.scrollBy({ left: direction * (cardWidth + 22) * 2, behavior: 'smooth' });
-  }, []);
+  const moveRecommendations = useCallback(
+    (direction) => scrollTrack(recommendationTrackRef, direction, '.recommendation-card', 250, 18, 2),
+    [scrollTrack],
+  );
 
   return (
     <main className="about-page">
       <div className="about-page__ambient" aria-hidden="true">
         <span className="about-page__orb about-page__orb--pink" />
         <span className="about-page__orb about-page__orb--mint" />
+        <span className="about-page__orb about-page__orb--peach" />
       </div>
 
       <div className="about-shell">
-        {/* Hero */}
+        {/* Hero banner: keep the wide desktop composition and rounded frame. */}
         <section className="about-hero" aria-labelledby="about-hero-title">
           <img
             className="about-hero__image"
@@ -191,7 +243,7 @@ export default function About({ addToCart = () => {} }) {
             alt="Deya Care skincare campaign portrait"
             fetchPriority="high"
           />
-          <div className="about-hero__overlay" />
+          <div className="about-hero__overlay" aria-hidden="true" />
           <div className="about-hero__content">
             <span className="about-kicker about-kicker--light">
               <Sparkles size={14} aria-hidden="true" />
@@ -202,14 +254,35 @@ export default function About({ addToCart = () => {} }) {
               <em>Care that feels like you.</em>
             </h1>
             <p>
-              We bring dermatological thinking and everyday well-being together in
-              thoughtful, bio-active rituals made to feel gentle, considered and easy to return to.
+              We bring dermatological thinking and everyday well-being together in thoughtful,
+              bio-active rituals made to feel gentle, considered and easy to return to.
             </p>
-            <a className="about-button about-button--light" href="/shop">
+            <Link className="about-button about-button--light" to="/shop">
               Explore the collection <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
+            </Link>
           </div>
-          <span className="about-hero__index" aria-hidden="true">01 / OUR STORY</span>
+          
+         
+           
+        </section>
+
+        {/* Compact values strip adds useful rhythm without changing the hero dimensions. */}
+        <section className="about-principles" aria-label="Deya Care principles">
+          {principles.map((principle, index) => {
+            const Icon = principle.icon;
+            return (
+              <article className="about-principle" key={principle.title} style={{ '--principle-index': index }}>
+                <span className="about-principle__icon">
+                  <Icon size={19} strokeWidth={1.7} aria-hidden="true" />
+                </span>
+                <span className="about-principle__copy">
+                  <strong>{principle.title}</strong>
+                  <small>{principle.copy}</small>
+                </span>
+                {index < principles.length - 1 && <span className="about-principle__divider" aria-hidden="true" />}
+              </article>
+            );
+          })}
         </section>
 
         {/* Founder note */}
@@ -220,7 +293,11 @@ export default function About({ addToCart = () => {} }) {
           </span>
           <h2 id="founder-note-title">A little more care. A little more you.</h2>
           <blockquote>
-            “I spent years looking for skincare that could keep up with my life—from urban rushes to rural escapes. I needed something simple, pristine and kind to my sensitive skin. After 18 months of perfecting these formulas with experts, Deya Care is finally in your hands. This is my moment of happiness in a container; I hope it becomes yours, too. Welcome to the Happy Tribe!”
+            “I spent years looking for skincare that could keep up with my life—from urban rushes to
+            rural escapes. I needed something simple, pristine and kind to my sensitive skin. After
+            18 months of perfecting these formulas with experts, Deya Care is finally in your hands.
+            This is my moment of happiness in a container; I hope it becomes yours, too. Welcome to
+            the Happy Tribe!”
           </blockquote>
           <div className="founder-note__signature-row">
             <img
@@ -240,16 +317,21 @@ export default function About({ addToCart = () => {} }) {
         <section className="about-philosophy" aria-labelledby="about-philosophy-title">
           <div className="about-philosophy__copy">
             <span className="about-kicker"><span className="about-kicker__dot" /> The way we see it</span>
-            <h2 id="about-philosophy-title">Intentional skincare.<em>Never complicated.</em></h2>
+            <h2 id="about-philosophy-title">
+              Intentional skincare.<em>Never complicated.</em>
+            </h2>
             <p>
-              Deya Care is an essentialist collection of high-potency rituals. Our bio-active ingredients are chosen to support the skin barrier and help care feel like a small, restorative part of your day.
+              Deya Care is an essentialist collection of high-potency rituals. Our bio-active
+              ingredients are chosen to support the skin barrier and help care feel like a small,
+              restorative part of your day.
             </p>
             <p>
-              No overwhelming ten-step routine. No impossible promises. Just considered essentials designed around the moments that make up real life.
+              No overwhelming ten-step routine. No impossible promises. Just considered essentials
+              designed around the moments that make up real life.
             </p>
-            <a className="about-text-link" href="/shop">
+            <Link className="about-text-link" to="/shop">
               Find your daily ritual <ArrowRight size={16} aria-hidden="true" />
-            </a>
+            </Link>
             <div className="about-philosophy__signature" aria-hidden="true">
               <span>Thoughtful by nature</span>
               <Leaf size={22} />
@@ -265,11 +347,13 @@ export default function About({ addToCart = () => {} }) {
               <span>THE DEYA DIFFERENCE</span>
               <strong>Gentle as a cloud.</strong>
             </div>
-            <span className="about-philosophy__visual-mark" aria-hidden="true"><Sparkles size={24} /></span>
+            <span className="about-philosophy__visual-mark" aria-hidden="true">
+              <Sparkles size={24} />
+            </span>
           </div>
         </section>
 
-        {/* Values */}
+        {/* Values accordion */}
         <section className="about-values" aria-labelledby="about-values-title">
           <div className="about-values__image-wrap">
             <img
@@ -313,7 +397,9 @@ export default function About({ addToCart = () => {} }) {
                 );
               })}
             </div>
-            <div className="about-values__promise"><Check size={15} aria-hidden="true" /> Everyday care, made more intentional.</div>
+            <div className="about-values__promise">
+              <Check size={15} aria-hidden="true" /> Everyday care, made more intentional.
+            </div>
           </div>
         </section>
 
@@ -337,74 +423,115 @@ export default function About({ addToCart = () => {} }) {
             </div>
           </div>
 
-          <div className="about-ingredients__track" ref={ingredientTrackRef} tabIndex={0} aria-label="Ingredient highlights">
+          <div
+            className="about-ingredients__track"
+            ref={ingredientTrackRef}
+            tabIndex={0}
+            aria-label="Ingredient highlights; hover, touch or focus to pause scrolling"
+          >
             {[...ingredients, ...ingredients].map((ingredient, index) => (
               <article
                 className="ingredient-card"
                 key={`${ingredient.name}-${index}`}
                 style={{ '--ingredient-index': index % ingredients.length }}
-                aria-hidden={index >= ingredients.length}
+                aria-hidden={index >= ingredients.length ? true : undefined}
               >
                 <div className="ingredient-card__image-wrap">
-                  <img src={ingredient.image} alt={index >= ingredients.length ? '' : ingredient.name} loading="lazy" />
+                  <img
+                    src={ingredient.image}
+                    alt={index >= ingredients.length ? '' : ingredient.name}
+                    loading="lazy"
+                  />
                   <span className="ingredient-card__image-icon"><Leaf size={15} aria-hidden="true" /></span>
                 </div>
                 <div className="ingredient-card__copy">
                   <h3>{ingredient.name}</h3>
                   <p>{ingredient.copy}</p>
-                  <span className="ingredient-card__footer">A PURPOSEFUL ELEMENT <ArrowUpRight size={13} aria-hidden="true" /></span>
+                  <span className="ingredient-card__footer">
+                    A PURPOSEFUL ELEMENT <ArrowUpRight size={13} aria-hidden="true" />
+                  </span>
                 </div>
               </article>
             ))}
           </div>
-          <div className="about-ingredients__hint"><span /> Swipe or use the arrows to explore ingredients <span /></div>
+          <div className="about-ingredients__hint">
+            <span /> Swipe or use the arrows to explore ingredients <span />
+          </div>
         </section>
 
+        {/* Recommended products */}
         <section className="about-recommendations" aria-labelledby="about-recommendations-title">
           <div className="about-recommendations__heading">
-            <h2 id="about-recommendations-title">You may also like</h2>
-            <a href="/shop" className="about-recommendations__view-all">View All <ArrowRight size={15} aria-hidden="true" /></a>
-          </div>
-          <div className="about-recommendations__viewport">
-            <button
-              className="about-recommendations__arrow about-recommendations__arrow--left"
-              type="button"
-              onClick={() => moveRecommendations(-1)}
-              aria-label="Show previous recommended products"
-            >
-              <ChevronLeft size={18} aria-hidden="true" />
-            </button>
-            <div className="about-recommendations__track" ref={recommendationTrackRef} tabIndex={0} aria-label="Recommended products">
-              {recommendedProducts.map((product) => (
-                <article className="recommendation-card" key={product.id}>
-                  <a className="recommendation-card__image" href={`/product/${product.id}`}>
-                    <span className="recommendation-card__category">{product.category}</span>
-                    <img src={product.image} alt={product.name} loading="lazy" />
-                  </a>
-                  <div className="recommendation-card__body">
-                    <a href={`/product/${product.id}`} className="recommendation-card__name">{product.name}</a>
-                    <div className="recommendation-card__price">
-                      <strong>₹{product.price.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</strong>
-                      {product.originalPrice && <del>₹{product.originalPrice.toLocaleString('en-IN')}</del>}
-                    </div>
-                    <p>{product.description}</p>
-                    <div className="recommendation-card__bottom">
-                      <span aria-label="5 out of 5 stars">★★★★★ <b>5</b></span>
-                      <button type="button" onClick={() => addToCart(product)}>Add to bag</button>
-                    </div>
-                  </div>
-                </article>
-              ))}
+            <div>
+              <span className="about-kicker"><span className="about-kicker__dot" /> Find your ritual</span>
+              <h2 id="about-recommendations-title">You may also like</h2>
             </div>
-            <button
-              className="about-recommendations__arrow about-recommendations__arrow--right"
-              type="button"
-              onClick={() => moveRecommendations(1)}
-              aria-label="Show next recommended products"
-            >
-              <ChevronRight size={18} aria-hidden="true" />
-            </button>
+            <Link to="/shop" className="about-recommendations__view-all">
+              View all products <ArrowRight size={15} aria-hidden="true" />
+            </Link>
           </div>
+
+          {recommendedProducts.length > 0 ? (
+            <div className="about-recommendations__viewport">
+              <button
+                className="about-recommendations__arrow about-recommendations__arrow--left"
+                type="button"
+                onClick={() => moveRecommendations(-1)}
+                aria-label="Show previous recommended products"
+              >
+                <ChevronLeft size={18} aria-hidden="true" />
+              </button>
+              <div
+                className="about-recommendations__track"
+                ref={recommendationTrackRef}
+                tabIndex={0}
+                aria-label="Recommended products"
+              >
+                {recommendedProducts.map((product) => (
+                  <article className="recommendation-card" key={product.id}>
+                    <Link className="recommendation-card__image" to={`/product/${product.id}`}>
+                      <span className="recommendation-card__category">{product.category}</span>
+                      <img src={product.image} alt={product.name} loading="lazy" />
+                      <span className="recommendation-card__quick-view">Explore <ArrowUpRight size={14} aria-hidden="true" /></span>
+                    </Link>
+                    <div className="recommendation-card__body">
+                      <Link to={`/product/${product.id}`} className="recommendation-card__name">{product.name}</Link>
+                      <div className="recommendation-card__price">
+                        <strong>₹{formatPrice(product.price)}</strong>
+                        {product.originalPrice != null && (
+                          <del>₹{formatPrice(product.originalPrice)}</del>
+                        )}
+                      </div>
+                      <p>{product.description}</p>
+                      <div className="recommendation-card__bottom">
+                        <span className="recommendation-card__label"><Leaf size={12} aria-hidden="true" /> Daily essential</span>
+                        <button
+                          type="button"
+                          onClick={() => addToCart(product)}
+                          aria-label={`Add ${product.name} to bag`}
+                        >
+                          Add to bag <ArrowUpRight size={13} aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <button
+                className="about-recommendations__arrow about-recommendations__arrow--right"
+                type="button"
+                onClick={() => moveRecommendations(1)}
+                aria-label="Show next recommended products"
+              >
+                <ChevronRight size={18} aria-hidden="true" />
+              </button>
+            </div>
+          ) : (
+            <p className="about-recommendations__empty">
+              Explore the shop to discover the Deya Care collection.
+              <Link to="/shop"> Browse products <ArrowRight size={14} aria-hidden="true" /></Link>
+            </p>
+          )}
         </section>
 
         {/* Shared newsletter component from the existing site */}

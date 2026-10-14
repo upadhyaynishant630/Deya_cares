@@ -1,1 +1,910 @@
-/* Login page styles are composed from the shared design system. */
+/* =========================================================
+   DEYA CARE — PREMIUM LOGIN / SIGN-UP MODAL
+   Responsive • Animated • Phone-first UI
+   ========================================================= */
+
+.deya-login-overlay,
+.deya-login-overlay * {
+  box-sizing: border-box;
+}
+
+.deya-login-overlay {
+  --deya-pink: #fa3981;
+  --deya-pink-dark: #df236c;
+  --deya-ink: #302239;
+  --deya-muted: #756675;
+  --deya-line: #f1dbe7;
+
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: grid;
+  place-items: center;
+
+  padding: 52px 16px 16px;
+
+  background: rgba(19, 17, 29, 0.62);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+
+  animation: deyaOverlayIn 220ms ease-out both;
+  isolation: isolate;
+}
+
+/* Dialog wrapper */
+
+.deya-login-dialog {
+  position: relative;
+  width: min(100%, 430px);
+  min-width: 0;
+  max-width: 430px;
+
+  margin: auto;
+
+  animation: deyaDialogIn 420ms cubic-bezier(0.2, 0.75, 0.25, 1)
+    both;
+}
+
+/* Circular close button */
+
+.deya-login-close {
+  position: absolute;
+  top: -43px;
+  left: 50%;
+  z-index: 5;
+
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  color: #45404b;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+
+  cursor: pointer;
+  transform: translateX(-50%);
+
+  box-shadow: 0 5px 22px rgba(20, 10, 30, 0.12);
+
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.deya-login-close:hover {
+  color: var(--deya-pink-dark);
+  background: #fff0f6;
+  transform: translateX(-50%) rotate(90deg);
+  box-shadow: 0 8px 25px rgba(20, 10, 30, 0.2);
+}
+
+.deya-login-close:focus-visible {
+  outline: 3px solid rgba(250, 57, 129, 0.4);
+  outline-offset: 4px;
+}
+
+/* Scrollable modal surface */
+
+.deya-login-surface {
+  width: 100%;
+  max-height: calc(100dvh - 76px);
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  color: var(--deya-ink);
+
+  background:
+    radial-gradient(
+      circle at 5% 25%,
+      rgba(255, 220, 237, 0.25),
+      transparent 28%
+    ),
+    linear-gradient(150deg, #fff9fc 0%, #fff3f9 100%);
+
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 39px;
+
+  box-shadow:
+    0 30px 100px rgba(14, 10, 26, 0.24),
+    0 8px 28px rgba(14, 10, 26, 0.09);
+
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #edc6d9 transparent;
+}
+
+/* Top announcement strip */
+
+.deya-login-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 31px;
+  padding: 7px 16px;
+
+  color: #493346;
+  background: linear-gradient(90deg, #ffe8f1, #ffdeec, #ffe8f1);
+
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.015em;
+  text-align: center;
+}
+
+/* Main content */
+
+.deya-login-content {
+  padding: 20px 30px 22px;
+}
+
+/* Logo */
+
+.deya-login-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 45px;
+  margin: 0 auto 12px;
+}
+
+.deya-login-logo {
+  display: block;
+
+  width: auto;
+  max-width: 190px;
+  max-height: 44px;
+
+  object-fit: contain;
+  object-position: center;
+}
+
+.deya-login-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+
+  color: #272033;
+
+  font-size: 25px;
+  font-weight: 780;
+  letter-spacing: -0.065em;
+  line-height: 1;
+}
+
+.deya-login-wordmark span {
+  color: var(--deya-pink);
+  font-weight: 500;
+}
+
+/* Heading */
+
+.deya-login-heading {
+  margin: 8px 0 20px;
+  text-align: center;
+}
+
+.deya-login-heading h2 {
+  margin: 0;
+
+  color: var(--deya-pink);
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+
+.deya-login-heading h2 span {
+  color: #de70a0;
+  font-weight: 500;
+}
+
+.deya-login-heading p {
+  max-width: 300px;
+  margin: 7px auto 0;
+
+  color: #403443;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* Promotional visual */
+
+.deya-login-visual {
+  position: relative;
+  width: 90%;
+  border-radius: 50px;
+
+  aspect-ratio: 1.76 / 1;
+  margin: 0 auto 16px;
+
+  overflow: hidden;
+
+  background: linear-gradient(125deg, #f6c8e5 0%, #d9e7ff 52%, #ffdeed 100%);
+  border-radius: 3px;
+
+  isolation: isolate;
+}
+
+.deya-login-promo-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.deya-login-visual:hover .deya-login-promo-image {
+  transform: scale(1.035);
+}
+
+/* Attractive built-in image fallback */
+
+.deya-login-visual-fallback {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+  padding: 15px 17px;
+
+  color: #552445;
+
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 255, 255, 0.65),
+      transparent 27%
+    ),
+    linear-gradient(130deg, #f7d0ed 0%, #d8e9ff 56%, #ffdfeb 100%);
+}
+
+.deya-login-visual-fallback::before {
+  position: absolute;
+  top: -35px;
+  right: -28px;
+
+  width: 130px;
+  height: 130px;
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+
+  content: "";
+}
+
+.deya-login-visual-kicker {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+.deya-login-visual-fallback h3 {
+  position: relative;
+  z-index: 2;
+
+  max-width: 185px;
+  margin: 9px 0 0;
+
+  font-size: clamp(21px, 5vw, 30px);
+  font-weight: 750;
+  letter-spacing: -0.065em;
+  line-height: 1.02;
+}
+
+.deya-login-visual-fallback h3 em {
+  color: #a63177;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.deya-login-product-art {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+
+  width: 135px;
+  height: 115px;
+}
+
+.deya-login-bottle,
+.deya-login-jar {
+  position: absolute;
+  bottom: 0;
+
+  display: block;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 24px rgba(105, 51, 100, 0.15);
+}
+
+.deya-login-bottle {
+  width: 38px;
+  height: 82px;
+
+  border-radius: 9px 9px 12px 12px;
+
+  background: linear-gradient(105deg, #fff, #f8eaf4 60%, #dfbad8);
+}
+
+.deya-login-bottle::before {
+  position: absolute;
+  top: -9px;
+  left: 11px;
+
+  width: 16px;
+  height: 10px;
+
+  background: #fff5fb;
+  border-radius: 4px 4px 1px 1px;
+
+  content: "";
+}
+
+.deya-login-bottle-one {
+  left: 12px;
+  transform: rotate(-7deg);
+}
+
+.deya-login-bottle-two {
+  right: 11px;
+  height: 94px;
+
+  background: linear-gradient(105deg, #f3b8da, #fff2f9 66%, #d7b3d7);
+  transform: rotate(6deg);
+}
+
+.deya-login-jar {
+  bottom: 1px;
+  left: 40px;
+
+  width: 54px;
+  height: 43px;
+
+  background: linear-gradient(100deg, #fff3cd, #f6bb6c 65%, #df9259);
+  border-radius: 9px 9px 14px 14px;
+}
+
+.deya-login-jar::before {
+  position: absolute;
+  top: -7px;
+  left: -2px;
+
+  width: 58px;
+  height: 9px;
+
+  background: linear-gradient(90deg, #ffe9ae, #ffc967);
+  border-radius: 5px;
+
+  content: "";
+}
+
+.deya-login-art-sparkle {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+
+  color: #ffffff;
+
+  animation: deyaSparkle 3s ease-in-out infinite;
+}
+
+/* Form */
+
+.deya-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 100%;
+}
+
+.deya-login-input-label {
+  display: block;
+
+  margin: 0 0 1px;
+
+  color: #433544;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.deya-login-phone-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  min-height: 54px;
+  padding: 0 14px;
+
+  background: #ffffff;
+  border: 1.5px solid #ff4a8d;
+  border-radius: 13px;
+
+  box-shadow: 0 3px 12px rgba(231, 44, 119, 0.05);
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.deya-login-phone-field:focus-within {
+  border-color: #e72b76;
+  box-shadow: 0 0 0 4px rgba(250, 57, 129, 0.11);
+}
+
+.deya-login-country {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+
+  color: #28212c;
+
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.deya-login-country > span:first-child {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.deya-login-country-chevron {
+  color: #918592;
+  font-size: 14px;
+}
+
+.deya-login-phone-field input {
+  min-width: 0;
+  width: 100%;
+  height: 48px;
+  padding: 0;
+
+  color: #302739;
+  background: transparent;
+  border: 0;
+  outline: none;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.deya-login-phone-field input::placeholder,
+.deya-login-otp-input::placeholder {
+  color: #a79aa8;
+  opacity: 1;
+}
+
+.deya-login-helper {
+  margin: -3px 1px 1px;
+
+  color: #827482;
+
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.deya-login-otp-input {
+  display: block;
+
+  width: 100%;
+  min-height: 54px;
+  padding: 12px 15px;
+
+  color: #302739;
+  background: #ffffff;
+  border: 1.5px solid #ff4a8d;
+  border-radius: 13px;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-align: center;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.deya-login-otp-input:focus {
+  border-color: #e72b76;
+  box-shadow: 0 0 0 4px rgba(250, 57, 129, 0.11);
+}
+
+/* Primary CTA */
+
+.deya-login-submit {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  min-height: 52px;
+  margin-top: 0;
+  padding: 13px 18px;
+
+  color: #ffffff;
+  background: linear-gradient(110deg, #fa3981 0%, #ff458d 55%, #fa3981 100%);
+  background-size: 170% 100%;
+
+  border: 0;
+  border-radius: 13px;
+
+  box-shadow: 0 7px 17px rgba(239, 47, 121, 0.17);
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 750;
+
+  transition:
+    background-position 250ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.deya-login-submit:hover {
+  background-position: 100% 0;
+  box-shadow: 0 11px 24px rgba(239, 47, 121, 0.26);
+  transform: translateY(-2px);
+}
+
+.deya-login-submit:active {
+  box-shadow: 0 4px 12px rgba(239, 47, 121, 0.18);
+  transform: translateY(0);
+}
+
+.deya-login-submit:focus-visible {
+  outline: 3px solid rgba(250, 57, 129, 0.35);
+  outline-offset: 4px;
+}
+
+.deya-login-submit svg {
+  transition: transform 180ms ease;
+}
+
+.deya-login-submit:hover svg {
+  transform: translateX(3px);
+}
+
+/* Optional marketing consent */
+
+.deya-login-consent {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+
+  margin-top: 7px;
+
+  color: #746978;
+
+  font-size: 10.5px;
+  line-height: 1.55;
+
+  cursor: pointer;
+}
+
+.deya-login-consent input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.deya-login-checkbox {
+  display: grid;
+  place-items: center;
+
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+
+  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid #baabb9;
+  border-radius: 4px;
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.deya-login-consent input:checked + .deya-login-checkbox {
+  background: #fa3981;
+  border-color: #fa3981;
+}
+
+.deya-login-consent input:focus-visible + .deya-login-checkbox {
+  outline: 3px solid rgba(250, 57, 129, 0.24);
+  outline-offset: 2px;
+}
+
+/* Status messages */
+
+.deya-login-status {
+  margin: 0;
+  padding: 9px 11px;
+
+  border-radius: 9px;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.deya-login-status-error {
+  color: #a41f45;
+  background: #fff0f3;
+  border: 1px solid #ffd5df;
+}
+
+.deya-login-status-info {
+  color: #67416a;
+  background: #f8eafb;
+  border: 1px solid #edd4f0;
+}
+
+/* OTP navigation */
+
+.deya-login-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  align-self: center;
+  width: fit-content;
+  padding: 7px 10px;
+
+  color: #8a3566;
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+
+  transition: color 160ms ease;
+}
+
+.deya-login-back:hover {
+  color: #df236c;
+}
+
+/* Terms and footer */
+
+.deya-login-legal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+
+  margin: 15px auto 0;
+
+  color: #827482;
+
+  font-size: 10px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.deya-login-legal svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: #a1839e;
+}
+
+.deya-login-legal a {
+  color: #685766;
+  text-decoration: underline;
+  text-decoration-color: rgba(104, 87, 102, 0.45);
+  text-underline-offset: 2px;
+
+  transition: color 160ms ease;
+}
+
+.deya-login-legal a:hover {
+  color: var(--deya-pink-dark);
+}
+
+.deya-login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  margin: 15px 0 0;
+
+  color: #aa9daa;
+
+  font-size: 9px;
+  font-weight: 550;
+  letter-spacing: 0.015em;
+  text-align: center;
+}
+
+.deya-login-footer-dot {
+  width: 4px;
+  height: 4px;
+
+  background: #e4a9c5;
+  border-radius: 50%;
+}
+
+/* Animations */
+
+@keyframes deyaOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes deyaDialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.965);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes deyaSparkle {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: rotate(0deg) scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: rotate(14deg) scale(1.08);
+  }
+}
+
+/* Tablet and mobile */
+
+@media (max-width: 600px) {
+  .deya-login-overlay {
+    padding: 47px 12px 12px;
+  }
+
+  .deya-login-dialog {
+    width: 100%;
+    max-width: 410px;
+  }
+
+  .deya-login-surface {
+    max-height: calc(100dvh - 65px);
+    border-radius: 29px;
+  }
+
+  .deya-login-content {
+    padding: 16px 21px 19px;
+  }
+
+  .deya-login-topbar {
+    min-height: 29px;
+    font-size: 10px;
+  }
+
+  .deya-login-brand {
+    min-height: 39px;
+    margin-bottom: 10px;
+  }
+
+  .deya-login-logo {
+    max-width: 165px;
+    max-height: 38px;
+  }
+
+  .deya-login-heading {
+    margin-bottom: 15px;
+  }
+
+  .deya-login-heading p {
+    font-size: 12px;
+  }
+
+  .deya-login-visual {
+    margin-bottom: 14px;
+  }
+
+  .deya-login-phone-field,
+  .deya-login-submit,
+  .deya-login-otp-input {
+    min-height: 50px;
+  }
+
+  .deya-login-legal {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .deya-login-content {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .deya-login-surface {
+    border-radius: 25px;
+  }
+
+  .deya-login-visual-fallback {
+    padding: 12px;
+  }
+
+  .deya-login-product-art {
+    right: 7px;
+    transform: scale(0.82);
+    transform-origin: bottom right;
+  }
+
+  .deya-login-consent {
+    font-size: 10px;
+  }
+}
+
+/* Reduced motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .deya-login-overlay,
+  .deya-login-dialog,
+  .deya-login-art-sparkle {
+    animation: none !important;
+  }
+
+  .deya-login-overlay *,
+  .deya-login-overlay *::before,
+  .deya-login-overlay *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
