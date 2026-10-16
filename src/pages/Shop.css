@@ -60,6 +60,7 @@
 }
 
 /* Banner */
+
 .shop-banner-wrap {
   position: relative;
   min-height: 175px;
@@ -139,6 +140,7 @@
 }
 
 /* Heading */
+
 .shop-heading {
   display: flex;
   align-items: end;
@@ -251,6 +253,7 @@
 }
 
 /* Main filters + products */
+
 .shop-main-layout {
   display: grid;
   grid-template-columns: minmax(215px, 250px) minmax(0, 1fr);
@@ -480,6 +483,7 @@
 }
 
 /* Toolbar */
+
 .shop-results {
   min-width: 0;
 }
@@ -605,6 +609,7 @@
 }
 
 /* Product count and active filters */
+
 .shop-results-meta {
   display: flex;
   min-height: 31px;
@@ -649,6 +654,7 @@
 }
 
 /* Product grid — ProductCard remains reusable */
+
 .shop-page .product-grid.shop-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -667,6 +673,7 @@
 }
 
 /* Apply polished interaction to a variety of ProductCard roots */
+
 .shop-product-item .product-card,
 .shop-product-item article,
 .shop-product-item .product-card-link {
@@ -683,6 +690,7 @@
 }
 
 /* Empty search state */
+
 .shop-empty-state {
   display: flex;
   min-height: 340px;
@@ -753,6 +761,7 @@
 }
 
 /* Pagination */
+
 .shop-pagination {
   display: flex;
   align-items: center;
@@ -795,27 +804,37 @@
 }
 
 /* Motion */
+
 @keyframes shop-banner-enter {
   from { opacity: 0; transform: translateY(10px); }
+
   to { opacity: 1; transform: translateY(0); }
+
 }
 
 @keyframes shop-caption-enter {
   from { opacity: 0; transform: translateY(13px); }
+
   to { opacity: 1; transform: translateY(0); }
+
 }
 
 @keyframes shop-banner-caption-enter {
   from { opacity: 0; transform: translateY(calc(-50% + 13px)); }
+
   to { opacity: 1; transform: translateY(-50%); }
+
 }
 
 @keyframes shop-product-enter {
   from { opacity: 0; transform: translateY(12px); }
+
   to { opacity: 1; transform: translateY(0); }
+
 }
 
 /* Smaller desktops / laptops */
+
 @media (max-width: 1200px) {
   .shop-shell {
     width: calc(100% - 44px);
@@ -833,6 +852,7 @@
   .shop-page .product-grid.shop-grid {
     gap: 18px 13px;
   }
+
 }
 
 @media (max-width: 1000px) {
@@ -864,9 +884,11 @@
     flex: 1 1 200px;
     width: auto;
   }
+
 }
 
 /* Tablet: filters open as a compact dropdown panel */
+
 @media (max-width: 760px) {
   .shop-page {
     padding-top: 14px;
@@ -1021,9 +1043,11 @@
   .shop-results-meta {
     margin-top: 2px;
   }
+
 }
 
 /* Mobile */
+
 @media (max-width: 520px) {
   .shop-shell {
     width: calc(100% - 24px);
@@ -1114,6 +1138,7 @@
     width: 33px;
     height: 33px;
   }
+
 }
 
 @media (max-width: 360px) {
@@ -1145,6 +1170,7 @@
   .shop-sort-select-wrap {
     flex: 1;
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1156,6 +1182,7 @@
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+
 }
 
 /* ==========================================================
@@ -1186,6 +1213,7 @@
 }
 
 /* Hero banner */
+
 .shop-banner-wrap {
   border: 1px solid rgba(255, 255, 255, 0.96);
   border-radius: 24px;
@@ -1260,6 +1288,7 @@
 }
 
 /* Collection heading */
+
 .shop-heading {
   position: relative;
   padding-top: clamp(35px, 4vw, 54px);
@@ -1334,6 +1363,7 @@
 }
 
 /* Filter panel */
+
 .shop-filter-panel {
   position: sticky;
   border-color: rgba(235, 225, 231, 0.96);
@@ -1375,7 +1405,7 @@
 
 .shop-reset-button {
   border-radius: 7px;
-  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
 }
 
 .shop-reset-button:hover {
@@ -1454,6 +1484,7 @@
 }
 
 /* Search and sorting toolbar */
+
 .shop-toolbar {
   gap: 12px;
 }
@@ -1462,7 +1493,7 @@
   min-height: 46px;
   border-radius: 13px;
   box-shadow: 0 5px 16px rgba(65, 44, 61, 0.035);
-  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms var(--shop-ease), background 220ms ease;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms var(--shop-ease), background-color 220ms ease;
 }
 
 .shop-search-field:focus-within {
@@ -1480,7 +1511,7 @@
 }
 
 .shop-clear-search {
-  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
 }
 
 .shop-clear-search:hover {
@@ -1506,7 +1537,7 @@
 
 .shop-mobile-filter-button {
   border-radius: 12px;
-  transition: color 200ms ease, background 200ms ease, border-color 200ms ease, transform 200ms var(--shop-ease), box-shadow 200ms ease;
+  transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease, transform 200ms var(--shop-ease), box-shadow 200ms ease;
 }
 
 .shop-mobile-filter-button:hover {
@@ -1531,6 +1562,7 @@
 }
 
 /* Product cards: keep ProductCard reusable while improving its presence */
+
 .shop-page .product-grid.shop-grid {
   gap: 24px 19px;
   perspective: 1000px;
@@ -1587,6 +1619,7 @@
 }
 
 /* Empty state */
+
 .shop-empty-state {
   position: relative;
   overflow: hidden;
@@ -1635,6 +1668,7 @@
 }
 
 /* Pagination */
+
 .shop-pagination {
   gap: 8px;
 }
@@ -1669,47 +1703,64 @@
 }
 
 /* Overlay refinement for mobile filter drawer */
+
 .shop-filter-backdrop {
   animation: shop-backdrop-in 220ms ease both;
 }
 
 @keyframes shop-banner-sheen {
   0%, 62%, 100% { left: -45%; opacity: 0; }
+
   68% { opacity: 1; }
+
   83% { left: 125%; opacity: 0.72; }
+
 }
 
 @keyframes shop-kicker-arrive {
   from { opacity: 0; transform: translateY(8px); }
+
   to { opacity: 1; transform: translateY(0); }
+
 }
 
 @keyframes shop-title-reveal {
   from { opacity: 0; transform: translateY(13px); filter: blur(4px); }
+
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
+
 }
 
 @keyframes shop-heading-enter {
   from { opacity: 0; transform: translateY(16px); }
+
   to { opacity: 1; transform: translateY(0); }
+
 }
 
 @keyframes shop-dot-breathe {
   0%, 100% { box-shadow: 0 0 0 4px rgba(207, 113, 147, 0.11); }
+
   50% { box-shadow: 0 0 0 7px rgba(207, 113, 147, 0.045); }
+
 }
 
 @keyframes shop-empty-float {
   0%, 100% { transform: translateY(0); }
+
   50% { transform: translateY(-4px); }
+
 }
 
 @keyframes shop-backdrop-in {
   from { opacity: 0; }
+
   to { opacity: 1; }
+
 }
 
 /* Laptop fit */
+
 @media (max-width: 1200px) {
   .shop-shell {
     width: calc(100% - 48px);
@@ -1722,9 +1773,11 @@
   .shop-product-item:hover {
     transform: translateY(-4px);
   }
+
 }
 
 /* Tablet and mobile refinements */
+
 @media (max-width: 760px) {
   .shop-shell {
     width: calc(100% - 32px);
@@ -1755,6 +1808,7 @@
   .shop-product-item:hover {
     transform: translateY(-3px);
   }
+
 }
 
 @media (max-width: 520px) {
@@ -1800,9 +1854,11 @@
     height: 34px;
     border-radius: 11px;
   }
+
 }
 
 /* Do not force animation on visitors who request reduced motion */
+
 @media (prefers-reduced-motion: reduce) {
   .shop-banner-wrap::after,
   .shop-banner-kicker,
@@ -1824,5 +1880,614 @@
   .shop-page *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+}
+
+/* ============================================================
+   DEYA CARE SHOP — FINAL RESPONSIVE CORRECTIONS
+   Keeps existing Shop.jsx hooks, state classes and ProductCard.
+   This layer intentionally comes last to resolve earlier overrides.
+   ============================================================ */
+
+.shop-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  overflow-wrap: break-word;
+}
+
+.shop-page,
+.shop-page *,
+.shop-page *::before,
+.shop-page *::after {
+  box-sizing: border-box;
+}
+
+.shop-shell {
+  width: min(1440px, calc(100% - 64px));
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.shop-main-layout,
+.shop-results,
+.shop-heading,
+.shop-heading-copy,
+.shop-toolbar,
+.shop-page .product-grid.shop-grid,
+.shop-product-item {
+  min-width: 0;
+}
+
+.shop-banner-wrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.shop-banner {
+  max-width: 100%;
+}
+
+.shop-banner-title,
+.shop-heading h1,
+.shop-heading h1 em,
+.shop-heading-description,
+.shop-empty-state h2 {
+  overflow-wrap: anywhere;
+}
+
+.shop-page button,
+.shop-page input,
+.shop-page select {
+  max-width: 100%;
+}
+
+.shop-page .product-grid.shop-grid > *,
+.shop-product-item > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.shop-product-item img {
+  max-width: 100%;
+}
+
+.shop-pagination {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+/* Mid-size desktop: preserve the sidebar without squeezing products. */
+@media (max-width: 1200px) {
+  .shop-shell {
+    width: calc(100% - 48px);
+  }
+
+  .shop-main-layout {
+    grid-template-columns: minmax(190px, 225px) minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .shop-page .product-grid.shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 14px;
+  }
+
+  .shop-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .shop-search-field {
+    flex: 1 1 190px;
+    min-width: 0;
+    width: auto;
+  }
+}
+
+/* Tablet landscape and compact laptops. */
+@media (max-width: 900px) and (min-width: 761px) {
+  .shop-shell {
+    width: calc(100% - 36px);
+  }
+
+  .shop-main-layout {
+    grid-template-columns: minmax(170px, 195px) minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .shop-filter-panel {
+    padding: 17px 13px;
+  }
+
+  .shop-heading {
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .shop-shipping-note {
+    min-width: 0;
+    max-width: 265px;
+  }
+
+  .shop-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .shop-search-field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .shop-sort-field {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .shop-sort-select-wrap {
+    min-width: 0;
+    width: min(220px, 65%);
+  }
+}
+
+/* Tablet and mobile: the filter panel becomes a proper slide-in drawer. */
+@media (max-width: 760px) {
+  .shop-page {
+    padding-top: 14px;
+    padding-bottom: 48px;
+  }
+
+  .shop-shell {
+    width: calc(100% - 32px);
+  }
+
+  .shop-banner-wrap {
+    height: clamp(180px, 34vw, 245px);
+    min-height: 175px;
+    border-radius: 17px;
+  }
+
+  .shop-banner-caption {
+    left: clamp(18px, 4vw, 28px);
+    width: calc(100% - 36px);
+    max-width: 570px;
+  }
+
+  .shop-banner-title {
+    font-size: clamp(27px, 5.5vw, 40px);
+  }
+
+  .shop-heading {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 17px;
+    padding: 30px 0 23px;
+  }
+
+  .shop-heading-copy {
+    width: 100%;
+    max-width: none;
+  }
+
+  .shop-heading h1 {
+    font-size: clamp(30px, 6.3vw, 43px);
+    line-height: 1.1;
+  }
+
+  .shop-heading-description {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .shop-shipping-note {
+    width: 100%;
+    min-width: 0;
+    max-width: 420px;
+    margin: 0;
+  }
+
+  .shop-main-layout {
+    display: block;
+  }
+
+  /* Explicitly override the later desktop sticky declaration. */
+  .shop-filter-panel {
+    position: fixed;
+    z-index: 1010;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(360px, calc(100vw - 38px));
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: max(22px, env(safe-area-inset-top)) 19px max(28px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    border: 0;
+    border-radius: 0 20px 20px 0;
+    background: #fffdfd;
+    box-shadow: 15px 0 55px rgba(39, 29, 43, 0.15);
+    transform: translateX(-105%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 280ms;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .shop-filter-panel.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .shop-filter-close {
+    display: grid;
+    flex: 0 0 auto;
+  }
+
+  .shop-filter-backdrop {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(31, 24, 37, 0.38);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    cursor: pointer;
+  }
+
+  .shop-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .shop-mobile-filter-button {
+    display: inline-flex;
+    min-width: 0;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+
+  .shop-search-field {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    height: 44px;
+    padding-inline: 11px;
+  }
+
+  .shop-search-field input {
+    min-width: 0;
+    font-size: 12px;
+  }
+
+  .shop-sort-field {
+    grid-column: 1 / -1;
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    white-space: normal;
+  }
+
+  .shop-sort-select-wrap {
+    flex: 0 1 230px;
+    min-width: 0;
+    width: min(230px, 68%);
+    height: 42px;
+  }
+
+  .shop-sort-select-wrap select {
+    min-width: 0;
+    font-size: 11px;
+  }
+
+  .shop-results-meta {
+    align-items: flex-start;
+    margin-top: 5px;
+  }
+
+  .shop-page .product-grid.shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 13px;
+  }
+
+  .shop-product-item {
+    border-radius: 16px;
+    animation-duration: 450ms;
+    will-change: auto;
+  }
+
+  .shop-product-item:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .shop-product-item:hover img {
+    transform: none;
+  }
+
+  .shop-empty-state {
+    min-height: 280px;
+    padding: 30px 18px;
+  }
+
+  .shop-pagination {
+    gap: 6px;
+    padding-top: 23px;
+  }
+
+  .shop-pagination button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Standard phones. */
+@media (max-width: 520px) {
+  .shop-shell {
+    width: calc(100% - 24px);
+  }
+
+  .shop-banner-wrap {
+    height: 215px;
+    min-height: 195px;
+    border-radius: 14px;
+  }
+
+  .shop-banner-caption {
+    left: 17px;
+    width: calc(100% - 34px);
+    gap: 10px;
+  }
+
+  .shop-banner-kicker {
+    gap: 7px;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+  }
+
+  .shop-banner-title {
+    max-width: 100%;
+    font-size: clamp(25px, 7.2vw, 35px);
+    line-height: 1.08;
+  }
+
+  .shop-heading {
+    padding-top: 26px;
+    padding-bottom: 20px;
+  }
+
+  .shop-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  .shop-heading h1 {
+    font-size: clamp(29px, 8vw, 38px);
+    line-height: 1.1;
+  }
+
+  .shop-heading-description {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .shop-shipping-note {
+    gap: 10px;
+    padding: 11px 12px;
+  }
+
+  .shop-toolbar {
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .shop-mobile-filter-button {
+    gap: 5px;
+    padding-inline: 9px;
+    font-size: 10px;
+  }
+
+  .shop-search-field {
+    min-height: 42px;
+    height: 42px;
+    gap: 7px;
+    padding-inline: 9px;
+  }
+
+  .shop-search-field input {
+    font-size: 11px;
+  }
+
+  .shop-sort-field {
+    font-size: 10px;
+  }
+
+  .shop-sort-select-wrap {
+    flex-basis: 0;
+    width: 62%;
+    height: 40px;
+  }
+
+  .shop-sort-select-wrap select {
+    padding-left: 10px;
+    padding-right: 29px;
+    font-size: 10px;
+  }
+
+  .shop-page .product-grid.shop-grid {
+    gap: 15px 10px;
+  }
+
+  .shop-results-meta p {
+    font-size: 10px;
+  }
+
+  .shop-active-filter {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .shop-empty-state {
+    min-height: 250px;
+    padding: 25px 15px;
+  }
+
+  .shop-pagination {
+    gap: 5px;
+  }
+
+  .shop-pagination button {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+  }
+}
+
+/* Extra-narrow phones. */
+@media (max-width: 380px) {
+  .shop-shell {
+    width: calc(100% - 20px);
+  }
+
+  .shop-banner-wrap {
+    height: 195px;
+    min-height: 185px;
+  }
+
+  .shop-banner-caption {
+    left: 14px;
+    width: calc(100% - 28px);
+  }
+
+  .shop-banner-title {
+    font-size: clamp(24px, 7.4vw, 29px);
+  }
+
+  .shop-heading h1 {
+    font-size: clamp(27px, 8.1vw, 32px);
+  }
+
+  .shop-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shop-mobile-filter-button {
+    justify-self: start;
+  }
+
+  .shop-search-field {
+    width: 100%;
+  }
+
+  .shop-sort-field {
+    grid-column: auto;
+    gap: 8px;
+  }
+
+  .shop-sort-select-wrap {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .shop-page .product-grid.shop-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 17px;
+  }
+
+  .shop-product-item {
+    border-radius: 15px;
+  }
+
+  .shop-filter-panel {
+    width: min(340px, calc(100vw - 28px));
+    padding-inline: 15px;
+  }
+
+  .shop-pagination button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Small-height landscape screens: keep all drawer controls reachable. */
+@media (max-width: 760px) and (max-height: 520px) {
+  .shop-filter-panel {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .shop-filter-heading {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    background: #fffdfd;
+  }
+
+  .shop-filter-group {
+    padding-block: 13px;
+  }
+}
+
+/* Touch devices should not keep desktop hover states stuck on screen. */
+@media (hover: none) {
+  .shop-banner-wrap:hover,
+  .shop-shipping-note:hover,
+  .shop-filter-panel:hover,
+  .shop-filter-note:hover,
+  .shop-mobile-filter-button:hover,
+  .shop-sort-select-wrap:hover,
+  .shop-product-item:hover {
+    transform: none;
+  }
+
+  .shop-banner-wrap:hover .shop-banner,
+  .shop-product-item:hover img {
+    transform: none;
+  }
+
+  .shop-product-item:hover {
+    filter: none;
+  }
+}
+
+/* Accessibility: honor reduced-motion preferences throughout the page. */
+@media (prefers-reduced-motion: reduce) {
+  .shop-page *,
+  .shop-page *::before,
+  .shop-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
   }
 }

@@ -730,3 +730,538 @@
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ============================================================
+   DEYA CARE — SIGNATURE NEWSLETTER
+   RESPONSIVE CSS OVERRIDES
+   Append this block at the end of your existing Newsletter.css
+   ============================================================ */
+
+/* Large laptops and desktops */
+@media (max-width: 1200px) {
+    .newsletter.deya-newsletter {
+        width: calc(100% - 40px);
+        max-width: 1440px;
+        grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+        gap: clamp(24px, 3.5vw, 42px);
+        padding: clamp(28px, 4vw, 48px);
+    }
+
+    .deya-newsletter__intro,
+    .deya-newsletter__form-panel {
+        min-width: 0;
+    }
+
+    .deya-newsletter__intro h2 {
+        font-size: clamp(32px, 4.2vw, 50px);
+    }
+
+    .deya-newsletter__description {
+        max-width: 100%;
+    }
+
+    .deya-newsletter__form-panel {
+        padding: clamp(22px, 2.8vw, 30px);
+    }
+
+    .deya-newsletter__promise {
+        gap: 10px 16px;
+    }
+}
+
+/* Tablets and smaller laptops */
+@media (max-width: 900px) {
+    .newsletter.deya-newsletter {
+        width: calc(100% - 36px);
+        max-width: 740px;
+        grid-template-columns: minmax(0, 1fr);
+        align-items: stretch;
+        gap: 28px;
+        margin: 32px auto 0;
+        padding: clamp(28px, 5vw, 42px);
+        border-radius: 26px;
+    }
+
+    .deya-newsletter__intro {
+        width: 100%;
+    }
+
+    .deya-newsletter__intro h2 {
+        max-width: 650px;
+        font-size: clamp(36px, 5.5vw, 48px);
+        line-height: 1.08;
+    }
+
+    .deya-newsletter__description {
+        max-width: 580px;
+        margin-top: 16px;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .deya-newsletter__promise {
+        gap: 12px 20px;
+        margin-top: 20px;
+    }
+
+    .deya-newsletter__form-panel {
+        width: 100%;
+        padding: clamp(22px, 4vw, 30px);
+        border-radius: 22px;
+    }
+
+    .deya-newsletter__form-heading {
+        gap: 12px;
+        margin-bottom: 21px;
+    }
+
+    .deya-newsletter__form-heading h3 {
+        font-size: 17px;
+    }
+
+    .deya-newsletter__input-wrap {
+        min-height: 54px;
+    }
+
+    .deya-newsletter__input-wrap input {
+        min-height: 52px;
+    }
+
+    .deya-newsletter__privacy {
+        flex-wrap: wrap;
+        line-height: 1.7;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 640px) {
+    .newsletter.deya-newsletter {
+        width: calc(100% - 28px);
+        max-width: 520px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 23px;
+        margin: 26px auto 0;
+        padding: 28px 21px 21px;
+        border-radius: 23px;
+    }
+
+    .newsletter.deya-newsletter::before {
+        top: -75px;
+        right: -55px;
+        width: 190px;
+        height: 190px;
+    }
+
+    .newsletter.deya-newsletter::after {
+        right: 5%;
+        bottom: -110px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .deya-newsletter__decor--one {
+        top: -90px;
+        left: 35%;
+        width: 210px;
+        height: 210px;
+    }
+
+    .deya-newsletter__decor--two {
+        right: -85px;
+        bottom: -90px;
+        width: 230px;
+        height: 230px;
+    }
+
+    .deya-newsletter__intro {
+        width: 100%;
+    }
+
+    .deya-newsletter__eyebrow {
+        max-width: 100%;
+        gap: 7px;
+        margin-bottom: 13px;
+        font-size: 9px;
+        letter-spacing: 0.13em;
+    }
+
+    .deya-newsletter__intro h2 {
+        max-width: 100%;
+        font-size: clamp(31px, 7.6vw, 42px);
+        line-height: 1.1;
+        letter-spacing: -0.055em;
+        overflow-wrap: break-word;
+    }
+
+    .deya-newsletter__intro h2 em {
+        margin-top: 4px;
+        font-size: 1em;
+        letter-spacing: -0.04em;
+    }
+
+    .deya-newsletter__description {
+        max-width: 100%;
+        margin-top: 13px;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .deya-newsletter__promise {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 11px 15px;
+        margin-top: 18px;
+    }
+
+    .deya-newsletter__promise span {
+        gap: 6px;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .deya-newsletter__promise svg {
+        flex-shrink: 0;
+    }
+
+    .deya-newsletter__form-panel {
+        width: 100%;
+        min-width: 0;
+        padding: 22px 18px 18px;
+        border-radius: 19px;
+    }
+
+    .deya-newsletter__form-heading {
+        align-items: center;
+        gap: 11px;
+        margin-bottom: 19px;
+    }
+
+    .deya-newsletter__mail-icon {
+        flex-basis: 44px;
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+    }
+
+    .deya-newsletter__form-heading h3 {
+        font-size: 16px;
+        line-height: 1.35;
+    }
+
+    .deya-newsletter__form-heading p {
+        font-size: 11px;
+        line-height: 1.55;
+    }
+
+    .deya-newsletter__form {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .deya-newsletter__label {
+        margin-bottom: 8px;
+        font-size: 11px;
+    }
+
+    .deya-newsletter__input-wrap {
+        width: 100%;
+        min-height: 51px;
+        gap: 9px;
+        padding-inline: 12px;
+        border-radius: 12px;
+    }
+
+    .deya-newsletter__input-wrap input {
+        width: 100%;
+        min-width: 0;
+        min-height: 49px;
+        font-size: 12px;
+    }
+
+    .deya-newsletter__hint {
+        margin: 8px 0 15px;
+        font-size: 10px;
+        line-height: 1.7;
+    }
+
+    .deya-newsletter__submit {
+        min-height: 49px;
+        gap: 10px;
+        padding: 5px 5px 5px 16px;
+        font-size: 12px;
+    }
+
+    .deya-newsletter__submit-label {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .deya-newsletter__submit-icon {
+        flex-basis: 37px;
+        width: 37px;
+        height: 37px;
+    }
+
+    .deya-newsletter__alert {
+        grid-template-columns: 22px minmax(0, 1fr) 27px;
+        gap: 8px;
+        margin-top: 13px;
+        padding: 11px 9px;
+        border-radius: 12px;
+        font-size: 11px;
+    }
+
+    .deya-newsletter__alert-message {
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .deya-newsletter__alert-close {
+        width: 27px;
+        height: 27px;
+    }
+
+    .deya-newsletter__privacy {
+        align-items: flex-start;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 14px;
+        font-size: 10px;
+        line-height: 1.65;
+        text-align: center;
+    }
+
+    .deya-newsletter__privacy svg {
+        margin-top: 2px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 420px) {
+    .newsletter.deya-newsletter {
+        width: calc(100% - 20px);
+        gap: 21px;
+        margin-top: 22px;
+        padding: 24px 15px 16px;
+        border-radius: 19px;
+    }
+
+    .newsletter.deya-newsletter::before {
+        top: -65px;
+        right: -70px;
+        width: 165px;
+        height: 165px;
+    }
+
+    .newsletter.deya-newsletter::after {
+        right: -25px;
+        bottom: -90px;
+        width: 170px;
+        height: 170px;
+    }
+
+    .deya-newsletter__eyebrow {
+        gap: 6px;
+        font-size: 8px;
+        letter-spacing: 0.11em;
+    }
+
+    .deya-newsletter__intro h2 {
+        font-size: clamp(28px, 8.1vw, 34px);
+        line-height: 1.12;
+        letter-spacing: -0.05em;
+    }
+
+    .deya-newsletter__description {
+        margin-top: 11px;
+        font-size: 11px;
+        line-height: 1.75;
+    }
+
+    .deya-newsletter__promise {
+        gap: 9px 12px;
+        margin-top: 15px;
+    }
+
+    .deya-newsletter__promise span {
+        gap: 5px;
+        font-size: 9px;
+    }
+
+    .deya-newsletter__form-panel {
+        padding: 19px 13px 15px;
+        border-radius: 16px;
+    }
+
+    .deya-newsletter__form-heading {
+        gap: 10px;
+        margin-bottom: 17px;
+    }
+
+    .deya-newsletter__mail-icon {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    .deya-newsletter__form-heading h3 {
+        font-size: 14px;
+    }
+
+    .deya-newsletter__form-heading p {
+        font-size: 10px;
+    }
+
+    .deya-newsletter__input-wrap {
+        min-height: 48px;
+        gap: 8px;
+        padding-inline: 10px;
+    }
+
+    .deya-newsletter__input-wrap input {
+        min-height: 46px;
+        font-size: 11px;
+    }
+
+    .deya-newsletter__submit {
+        min-height: 46px;
+        padding-left: 13px;
+        font-size: 11px;
+    }
+
+    .deya-newsletter__submit-icon {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .deya-newsletter__hint {
+        margin-bottom: 13px;
+        font-size: 9px;
+    }
+
+    .deya-newsletter__alert {
+        grid-template-columns: 20px minmax(0, 1fr) 25px;
+        gap: 6px;
+        padding: 9px 7px;
+        font-size: 10px;
+    }
+
+    .deya-newsletter__alert-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .deya-newsletter__alert-close {
+        width: 25px;
+        height: 25px;
+    }
+
+    .deya-newsletter__privacy {
+        gap: 5px;
+        font-size: 9px;
+    }
+}
+
+/* Extra-small screens */
+@media (max-width: 340px) {
+    .newsletter.deya-newsletter {
+        width: calc(100% - 16px);
+        padding: 21px 11px 13px;
+        border-radius: 17px;
+    }
+
+    .deya-newsletter__intro h2 {
+        font-size: 27px;
+    }
+
+    .deya-newsletter__eyebrow {
+        font-size: 7px;
+        letter-spacing: 0.09em;
+    }
+
+    .deya-newsletter__promise {
+        gap: 8px 10px;
+    }
+
+    .deya-newsletter__promise span {
+        font-size: 8px;
+    }
+
+    .deya-newsletter__form-panel {
+        padding: 17px 10px 13px;
+    }
+
+    .deya-newsletter__form-heading {
+        gap: 8px;
+    }
+
+    .deya-newsletter__mail-icon {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .deya-newsletter__form-heading h3 {
+        font-size: 13px;
+    }
+
+    .deya-newsletter__form-heading p {
+        font-size: 9px;
+    }
+
+    .deya-newsletter__input-wrap {
+        gap: 6px;
+        padding-inline: 8px;
+    }
+
+    .deya-newsletter__input-wrap input {
+        font-size: 10px;
+    }
+
+    .deya-newsletter__submit {
+        gap: 7px;
+        padding-left: 11px;
+        font-size: 10px;
+    }
+
+    .deya-newsletter__submit-icon {
+        flex-basis: 31px;
+        width: 31px;
+        height: 31px;
+    }
+}
+
+/* Touchscreen devices: prevent sticky hover effects */
+@media (hover: none) {
+    .deya-newsletter__form-panel:hover {
+        transform: none;
+    }
+
+    .deya-newsletter__submit:hover {
+        filter: none;
+        transform: none;
+    }
+
+    .deya-newsletter__submit:hover .deya-newsletter__submit-icon {
+        transform: none;
+    }
+
+    .deya-newsletter__promise span:hover svg {
+        transform: none;
+    }
+}
+
+/* Accessibility: respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .newsletter.deya-newsletter,
+    .newsletter.deya-newsletter *,
+    .newsletter.deya-newsletter *::before,
+    .newsletter.deya-newsletter *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
